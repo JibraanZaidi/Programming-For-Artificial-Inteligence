@@ -11,7 +11,7 @@ https://github.com/JibraanZaidi/Programming-For-Artificial-Inteligence
 
 ---
 
-## 📌 Project Overview
+## 📌 Subject Overview
 
 Artificial Intelligence (AI) is one of the most important and rapidly growing fields in computer science. This repository includes Python implementations that help understand how AI algorithms work and how they can be used to solve real-world problems.
 
@@ -49,13 +49,13 @@ The following tools and technologies are used in this repository:
 - Jupyter Notebook  
 
 ---
-##👨‍💻 Author
+## 👨‍💻 Author
 
 Jibraan Ali Zaidi
 
 GitHub Profile:
 https://github.com/JibraanZaidi
 
-##📜 License
+## 📜 License
 
 This repository is created for educational and learning purposes.
