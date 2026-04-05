@@ -1,0 +1,124 @@
+:root {
+    --glass-blue: rgba(10, 25, 41, 0.75);
+    --earth-cyan: #00d2ff;
+    --glacier-white: #f0faff;
+    --border-glow: rgba(0, 210, 255, 0.3);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body, html {
+    height: 100%;
+    font-family: 'Montserrat', sans-serif;
+    overflow: hidden;
+    display: flex; justify-content: center; align-items: center;
+    background-color: #050a0f;
+}
+
+/* VIDEO BACKGROUND */
+#video-background {
+    position: fixed;
+    top: 50%;
+    left: 40%;
+    transform: translate(-50%, -50%); /* Centers the video perfectly */
+    min-width: 150%;
+    min-height: 150%;
+    width: 150vw;
+    height: 100vh;
+    z-index: -2;
+    object-fit: contain; /* THIS IS THE FIX: 'contain' prevents zooming */
+    filter: saturate(1.2) brightness(0.6);
+    background-color: #000; /* Fills the empty space with black if the video doesn't fit exactly */
+}
+
+.vignette-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle, transparent 40%, rgba(0,10,20,0.9) 100%);
+    z-index: -1;
+}
+
+/* MAIN CONTAINER */
+.earth-container {
+    /* Full Screen & Cut-off Fixes */
+    width: 95%; 
+    max-width: 1200px;     /* Isey bada kiya hai taake full screen jaisa lage */
+    min-height: 90vh;      /* Screen ki 90% height lega */
+    max-height: 95vh;      /* Screen se bahar nahi jayega */
+    margin: 2vh auto;      /* Upar aur neeche thori safe space dega taake cut na ho */
+    overflow-y: auto;      /* Content barhne par andar scroll layega */
+
+    /* Transparency Fix (0.2 makes it very transparent) */
+    background: rgba(10, 25, 41, 0.2); 
+    
+    backdrop-filter: blur(15px); 
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid var(--border-glow); 
+    border-radius: 40px;
+    padding: 3rem; 
+    text-align: center;
+    box-shadow: 0 0 40px rgba(0, 210, 255, 0.15), 0 20px 50px rgba(0,0,0,0.5);
+    border-bottom: 3px solid var(--earth-cyan);
+    animation: floatUI 6s ease-in-out infinite;
+}
+
+/* Scrollbar ko hide karne ke liye (taake design kharab na ho) */
+.earth-container::-webkit-scrollbar {
+    display: none;
+}
+.earth-container {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+@keyframes floatUI {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+header h1 {
+    font-family: 'Cinzel Decorative', cursive; font-weight: 700;
+    color: var(--glacier-white); letter-spacing: 6px;
+    text-shadow: 0 0 15px var(--earth-cyan); margin-bottom: 5px;
+}
+
+#clock { font-size: 0.8rem; color: var(--earth-cyan); margin-bottom: 25px; font-weight: 200; }
+
+/* SEARCH BAR */
+.search-box { display: flex; gap: 10px; margin-bottom: 25px; }
+input {
+    flex: 1; padding: 12px 18px; border-radius: 30px;
+    border: 1px solid var(--border-glow);
+    background: rgba(255, 255, 255, 0.05); color: white; outline: none;
+    transition: 0.3s;
+}
+input:focus { background: rgba(255, 255, 255, 0.15); border-color: var(--earth-cyan); }
+
+button.search-btn {
+    background: var(--earth-cyan); border: none; padding: 12px 25px;
+    border-radius: 30px; color: #050a0f; font-weight: 700; cursor: pointer;
+    transition: 0.4s;
+}
+button:hover { box-shadow: 0 0 20px var(--earth-cyan); transform: scale(1.05); }
+
+/* WEATHER INFO */
+.city-name { font-family: 'Cinzel Decorative', cursive; color: var(--glacier-white); font-size: 1.6rem; }
+.temp { font-size: 4.5rem; font-weight: 200; color: var(--glacier-white); margin: 0; line-height: 1; }
+.weather-type { font-size: 1.2rem; color: var(--earth-cyan); font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-top: 5px; }
+.weather-desc { font-size: 0.8rem; color: #ccc; margin-bottom: 15px; }
+
+.weather-icon { width: 100px; filter: drop-shadow(0 0 15px var(--earth-cyan)) brightness(1.5); }
+
+/* NEW DATA GRID */
+.stats-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 15px;
+    margin-top: 25px; padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+.stat-item { background: rgba(0, 0, 0, 0.2); padding: 10px; border-radius: 15px; }
+.stat-item p { font-size: 0.7rem; color: var(--earth-cyan); letter-spacing: 1px; margin-bottom: 3px;}
+.stat-item strong { color: var(--glacier-white); font-size: 1rem; }
+
+/* HISTORY */
+.history { list-style: none; margin-top: 25px; font-size: 0.75rem; color: var(--glacier-white); opacity: 0.6; }
+.history li { padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.clear-btn { background: none; border: 1px solid var(--border-glow); color: var(--earth-cyan); padding: 5px 12px; border-radius: 20px; font-size: 0.65rem; cursor: pointer; margin-top: 15px; }
