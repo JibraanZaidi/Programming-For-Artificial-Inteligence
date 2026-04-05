@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkyCast | Horizon</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <video autoplay muted loop playsinline id="video-background">
+        <source src="{{ url_for('static', filename='earth_video.mp4') }}" type="video/mp4">
+    </video>
+    
+    <div class="vignette-overlay"></div>
+
+    <div class="earth-container">
+        <header>
+            <h1>SKYCAST</h1>
+            <div id="clock">00:00:00</div>
+        </header>
+
+        <form method="POST" class="search-box">
+            <input type="text" name="city" placeholder="Search the Globe..." required>
+            <button type="submit" class="search-btn">EXPLORE</button>
+        </form>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}<p style="color: #ff6b6b; font-size: 0.8rem; margin-bottom: 10px;">{{ messages[0] }}</p>{% endif %}
+        {% endwith %}
+
+        {% if weather %}
+        <div class="weather-display">
+            <h2 class="city-name">{{ weather.city }}</h2>
+            <img src="{{ weather.icon }}" class="weather-icon">
+            <h1 class="temp">{{ weather.temp }}°C</h1>
+            
+            <div class="weather-type">{{ weather.type }}</div>
+            <div class="weather-desc">{{ weather.desc }}</div>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <p>FEELS LIKE</p>
+                    <strong>{{ weather.feels_like }}°C</strong>
+                </div>
+                <div class="stat-item">
+                    <p>WIND SPEED</p>
+                    <strong>{{ weather.wind }} m/s</strong>
+                </div>
+                <div class="stat-item">
+                    <p>HUMIDITY</p>
+                    <strong>{{ weather.humidity }}%</strong>
+                </div>
+                <div class="stat-item">
+                    <p>PRESSURE</p>
+                    <strong>{{ weather.pressure }} hPa</strong>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="history-box">
+            <ul class="history">
+                {% for item in history %}<li>{{ item }}</li>{% endfor %}
+            </ul>
+            {% if history %}<button onclick="clearHist()" class="clear-btn">RESET RECORDS</button>{% endif %}
+        </div>
+    </div>
+
+    <script>
+        function updateTime() { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }
+        setInterval(updateTime, 1000); updateTime();
+        
+        function clearHist() { fetch('/clear', {method: 'POST'}).then(() => location.reload()); }
+    </script>
+</body>
+</html>
